@@ -4,7 +4,10 @@ import { revalidatePath } from "next/cache";
 async function Test() {
   async function handleSubmit(data: FormData) {
     "use server";
-    Cache.setItem("name", data.get("name"));
+    const expiration = new Date(2100, 1, 1);
+    Cache.setItem("name", data.get("name"), {
+      expires: expiration.getTime(),
+    });
     revalidatePath("/");
   }
 
